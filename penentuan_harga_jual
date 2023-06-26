@@ -1,0 +1,672 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMWsH/Lg6pRdaF5JZhCv2Za",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/rickateno29/price_forecast_exercise/blob/codespace-rickateno29-ideal-space-bassoon-x4p64v5gg55cvx5j/penentuan_harga_jual\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Membuat Rumus Harga Jual"
+      ],
+      "metadata": {
+        "id": "e3vwN2AUe35u"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Soft Cover Tanpa Amplop"
+      ],
+      "metadata": {
+        "id": "w_g9G885fOm1"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Input Jenis dan Ukuran Undangan"
+      ],
+      "metadata": {
+        "id": "Hbeu88QZvJAJ"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "id": "ZG-KGdVPU3At"
+      },
+      "outputs": [],
+      "source": [
+        "import pandas as pd"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# memasukkan data yang diperlukan\n",
+        "lebar = int(input(\"lebar : \"))\n",
+        "panjang = int(input(\"panjang: \"))\n",
+        "jumlah_pesanan = int(input(\"jumlah pesanan: \"))\n",
+        "# banyaknya hasil cetakan untuk ukuran kertas A3\n",
+        "kebutuhan_cetak = (32//lebar) * (42//panjang)\n",
+        "# total cetak satu sisi untuk jumlah pesanan yang diiput\n",
+        "total_cetak = ((jumlah_pesanan//kebutuhan_cetak))\n",
+        "# todal cetak untuk dua sisi untuk jumlah pesanan yang diinput\n",
+        "cetak_dua_sisi = (total_cetak)*2\n",
+        "# menampilkan hasil perhitungan\n",
+        "print('banyak cetak tiap a3: ',kebutuhan_cetak)\n",
+        "print('total_cetak: ',total_cetak)\n",
+        "print(\"cetak dua sisi: \",cetak_dua_sisi)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "TSfsJsvCVNND",
+        "outputId": "ee317300-8c75-49f8-f9d0-b69d958fc259"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "lebar : 16\n",
+            "panjang: 19\n",
+            "jumlah pesanan: 500\n",
+            "banyak cetak tiap a3:  4\n",
+            "total_cetak:  125\n",
+            "cetak dua sisi:  250\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Penentuan Harga"
+      ],
+      "metadata": {
+        "id": "FcJZaLwOvEP_"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Menghitung biaya cetak berdasarkan banyaknya jumlah cetak\n",
+        "\n",
+        "if kebutuhan_cetak > 100:\n",
+        "  biaya_cetak = cetak_dua_sisi * 2500\n",
+        "else:\n",
+        "  biaya_cetak = cetak_dua_sisi * 3300\n",
+        "print('total biaya cetak: Rp',\"{:,}\".format(biaya_cetak))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "P9ZV-A_zXLWN",
+        "outputId": "5ee74a5f-802c-47fd-c47c-e06318a999cb"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "total biaya cetak: Rp 825,000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# biaya beban produksi\n",
+        "\n",
+        "transportasi = 20000\n",
+        "biaya_potong = 500*jumlah_pesanan\n",
+        "plastik_app = (jumlah_pesanan / 100) * 4000\n",
+        "total_cost = transportasi + biaya_potong + plastik_app+biaya_cetak\n",
+        "print(f'total produksi untuk 1 {jumlah_pesanan} pcs adalah: Rp',\"{:,}\".format(total_cost))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "HH2UJFIpavTf",
+        "outputId": "29c0c606-136d-4777-c77a-0c188b029650"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "total produksi untuk 1 500 pcs adalah: Rp 1,115,000.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "profit = (total_cost/jumlah_pesanan) * 0.2"
+      ],
+      "metadata": {
+        "id": "UqTEjPT4eYsL"
+      },
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(f'profit untuk pesanan {jumlah_pesanan} pcs adalah: Rp ',\"{:,}\".format(profit*jumlah_pesanan))"
+      ],
+      "metadata": {
+        "id": "kj-MnKOgoc-O",
+        "outputId": "d3c5bdbd-67ad-4ffa-96e5-2f1ab8615b15",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "profit untuk pesanan 500 pcs adalah: Rp  223,000.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Harga Undangan Soft Cover tanpa Amplop"
+      ],
+      "metadata": {
+        "id": "XwAPzBVnt1TK"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Harga Jual Undangan Soft Cover per pcs dan total biaya (harga jual x jumlah pesanan)\n",
+        "\n",
+        "harga_jual = profit + (total_cost/jumlah_pesanan)\n",
+        "total_biaya_basic = harga_jual*jumlah_pesanan\n",
+        "print(f'total biaya yang harus dibayar untuk pesanan {jumlah_pesanan} pcs: Rp ', \"{:,}\".format(total_biaya_basic))\n",
+        "print(f'Harga jual per pcs untuk {jumlah_pesanan} pcs: Rp'\"{:,}\".format(harga_jual))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "slKd18pucsxw",
+        "outputId": "27216791-a98b-4056-c2d9-dd7b653ba9d1"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "total biaya yang harus dibayar untuk pesanan 500 pcs: Rp  1,338,000.0\n",
+            "Harga jual per pcs untuk 500 pcs: Rp2,676.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Softcover + Amplop"
+      ],
+      "metadata": {
+        "id": "JdH8aWvngXub"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Biaya Produksi"
+      ],
+      "metadata": {
+        "id": "O8FtrBtAvatJ"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Memasukkan ukuran yang dibutuhkan untuk membuat amplop\n",
+        "lebar_amplop = lebar*2 + 1\n",
+        "panjang_amplop = panjang + 5\n",
+        "\n",
+        "# Menghitung kebutuhan cetak amplop\n",
+        "kebutuhan_cetak_amplop = (42//lebar_amplop) * (32//panjang_amplop)\n",
+        "total_cetak_amplop = (jumlah_pesanan//kebutuhan_cetak_amplop)\n",
+        "\n",
+        "# Menampilkan hasil perhitungan\n",
+        "print('kebutuhan cetak amplop tiap kertas A3',kebutuhan_cetak_amplop)\n",
+        "print(\"total cetak: \",total_cetak_amplop)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "9ea421a5-4d64-4d32-e212-7e3dd7c0e77f",
+        "id": "Mn9MxcIQgbRK"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "kebutuhan cetak amplop tiap kertas A3 1\n",
+            "total cetak:  500\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Menghitung biaya produksi amplop berdasarkan banyaknya cetak\n",
+        "\n",
+        "if kebutuhan_cetak_amplop > 100:\n",
+        "  biaya_cetak_amplop = total_cetak_amplop * 3300\n",
+        "else:\n",
+        "  biaya_cetak_amplop = total_cetak_amplop * 5000\n",
+        "print('biaya cetak: Rp', \"{:,}\".format(biaya_cetak_amplop))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "594e41ad-a9f9-4f77-9d84-be6309a55be9",
+        "id": "6Q5Nyxh_gbRM"
+      },
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "biaya cetak: Rp 2,500,000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Menghitung biaya beban produksi\n",
+        "\n",
+        "biaya_potong_a = 500*jumlah_pesanan\n",
+        "biaya_alat = 30000\n",
+        "tenaga_kerja = 100000\n",
+        "total_cost_a = biaya_alat + biaya_potong_a + tenaga_kerja\n",
+        "print(f'total produksi amplop untuk {jumlah_pesanan} pcs adalah: Rp',\"{:,}\".format(total_cost_a))\n"
+      ],
+      "metadata": {
+        "id": "Jr02ci6uf630",
+        "outputId": "5670786e-5888-44cb-dc5c-2e2cb117fabf",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "total produksi amplop untuk 500 pcs adalah: Rp 380,000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Menghitung profit per pcs amplop\n",
+        "profit_a = (total_cost_a/jumlah_pesanan) * 0.2"
+      ],
+      "metadata": {
+        "id": "dcq6WXBLr6-1"
+      },
+      "execution_count": 11,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(\"Rp\", \"{:,}\".format(profit_a*jumlah_pesanan))"
+      ],
+      "metadata": {
+        "id": "m6jjCvpMuCqM",
+        "outputId": "6390bd3e-9e67-44ae-9da6-cc6287347e98",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Rp 76,000.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Harga Amplop"
+      ],
+      "metadata": {
+        "id": "fg3wult0ugiX"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Harga jual per amplop\n",
+        "harga_amplop = profit_a + (total_cost_a/jumlah_pesanan)\n",
+        "print(f'total biaya amplop yang harus dibayar untuk pesanan {jumlah_pesanan} pcs: Rp ', \"{:,}\".format(harga_amplop*jumlah_pesanan))\n",
+        "print(f'Harga jual amplop per pcs untuk {jumlah_pesanan} pcs: Rp'\"{:,}\".format(harga_amplop))"
+      ],
+      "metadata": {
+        "id": "MKdgbqUIsHvs",
+        "outputId": "f86dff64-19c1-4ec3-f82c-9fe9683920b9",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "total biaya amplop yang harus dibayar untuk pesanan 500 pcs: Rp  456,000.0\n",
+            "Harga jual amplop per pcs untuk 500 pcs: Rp912.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Harga Undangan Soft Cover + Amplop"
+      ],
+      "metadata": {
+        "id": "QksJKBsjumkj"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "harga_sc_amplop = harga_amplop+harga_jual\n",
+        "print(f'harga undangan soft cover dengan amplop {jumlah_pesanan} pcs: Rp',harga_sc_amplop)"
+      ],
+      "metadata": {
+        "id": "bwsOVYEFsU74",
+        "outputId": "ca029e96-014d-4540-f54f-981ca52d1eb4",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "harga undangan soft cover dengan amplop 500 pcs: Rp 3588.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "total_biaya_sc_lengkap = (harga_jual+harga_sc_amplop)*jumlah_pesanan\n",
+        "print(f'total yang harus dibayar untuk pesanan {jumlah_pesanan}pcs: Rp', \"{:,}\".format(total_biaya_sc_lengkap))"
+      ],
+      "metadata": {
+        "id": "wTpJ_U18tnoX",
+        "outputId": "689db0a2-7838-4d07-f2a9-97dc1dd8a11a",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "total yang harus dibayar untuk pesanan 500pcs: Rp 3,132,000.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Hard Cover Tanpa Amplop"
+      ],
+      "metadata": {
+        "id": "OwcGcEnLwtlw"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Rumus Harga"
+      ],
+      "metadata": {
+        "id": "JF03e_qQ1TG1"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "satu_papan_karton = (109//lebar)*(79//panjang)\n",
+        "kebutuhan_karton = jumlah_pesanan//(satu_papan_karton)\n",
+        "kekurangan = jumlah_pesanan - (kebutuhan_karton * (satu_papan_karton))\n",
+        "print('satu papan karton =', satu_papan_karton)\n",
+        "print('kebutuhan karton =', kebutuhan_karton)\n",
+        "print('kekurangan =', kekurangan)"
+      ],
+      "metadata": {
+        "id": "CwOEPckDwsjL",
+        "outputId": "1b5706f4-3c3f-439f-e606-ea0697fb14b1",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "satu papan karton = 24\n",
+            "kebutuhan karton = 8\n",
+            "kekurangan = 8\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "if kekurangan < satu_papan_karton:\n",
+        "  biaya_karton = 8000*kebutuhan_karton + 8000\n",
+        "elif kekurangan > 2*satu_papan_karton:\n",
+        "  biaya_karton = 8000*kebutuhan_karton + (16000)\n",
+        "elif kekurangan > 3*satu_papan_karton:\n",
+        "  biaya_karton = 8000*kebutuhan_karton + (24000)\n",
+        "else:\n",
+        "  biaya_karton = 8000*kebutuhan_karton + (28000)\n",
+        "\n",
+        "print(\"Biaya total: Rp\",\"{:,}\".format(biaya_karton))"
+      ],
+      "metadata": {
+        "id": "ZJv4HJfm0U97",
+        "outputId": "daf3f15f-0523-47f7-fc3d-607809a52b4a",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 22,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Biaya total: Rp 72,000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Biaya per karton"
+      ],
+      "metadata": {
+        "id": "etZvBiCI1Vjk"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "harga_jual_karton = biaya_karton/jumlah_pesanan\n",
+        "harga_jual_karton"
+      ],
+      "metadata": {
+        "id": "XOVHk23ry1GF",
+        "outputId": "c26e710f-d7e1-413e-e759-f15a7120e42e",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 23,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "360.0"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 23
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Harga Undangan Hard Cover"
+      ],
+      "metadata": {
+        "id": "RW2Rungc1Yez"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "harga_hc = harga_jual + harga_jual_karton\n",
+        "print(\"Harga undangan hard cover tanpa amplop: Rp\",\"{:,}\".format(harga_hc))\n",
+        "print(f'Total Biaya yang harus dibayar untuk {jumlah_pesanan}pcs hard cover tanpa amplop: Rp',\"{:,}\".format(harga_hc*jumlah_pesanan))"
+      ],
+      "metadata": {
+        "id": "7MFWbB_ny9hW",
+        "outputId": "2f89880f-4172-42e6-d836-35f3ce3dfabf",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 24,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Harga undangan hard cover tanpa amplop: Rp 3,108.0\n",
+            "Total Biaya yang harus dibayar untuk 200pcs hard cover tanpa amplop: Rp 621,600.0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Hard Cover + Amplop"
+      ],
+      "metadata": {
+        "id": "JjmgKiIG2bpV"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "hc_amplop = harga_hc + harga_amplop\n",
+        "print(f'Harga per pcs undangan hard cover + amplop untuk {jumlah_pesanan}pcs: Rp',\"{:,}\".format(hc_amplop))\n",
+        "print(f'Total Biaya yang harus dibayar untuk {jumlah_pesanan}pcs hard cover + amplop: Rp',\"{:,}\".format(hc_amplop*jumlah_pesanan))"
+      ],
+      "metadata": {
+        "id": "O9NDyOb22hQR",
+        "outputId": "096ce1b4-be31-477c-87a2-8534ae0589e8",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 25,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Harga per pcs undangan hard cover + amplop untuk 200pcs: Rp 4,488.0\n",
+            "Total Biaya yang harus dibayar untuk 200pcs hard cover + amplop: Rp 897,600.0\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
